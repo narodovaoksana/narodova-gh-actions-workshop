@@ -2,16 +2,16 @@ name: Hello World Training Workflow
 on:
   workflow_dispatch:
 jobs:
- greet:
-  env:
-    MY_ENV: "John Doe"
+  greet:
     runs-on: ubuntu-latest
+    env:
+      MY_ENV: "John Doe"
     steps:
-    - name: Run a multi-line script
-      run: |
+      - name: Run a multi-line script
+        run: |
           echo "Hello $MY_ENV"
           echo "Hello $GITHUB_ACTOR"
-    # List all files in the current directory for comparison before and after actions/checkout@v2.
-    - run: ls -l
-    - uses: actions/checkout@v2
-    - run: ls -l
+      - run: ls -l
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Latest version recommended
+      - run: ls -l
