@@ -2,9 +2,9 @@ name: Hello World Training Workflow
 on:
   workflow_dispatch:
 jobs:
-      greet:
-        env:
-            MY_ENV: "John Doe"
+ greet:
+  env:
+    MY_ENV: "John Doe"
     runs-on: ubuntu-latest
     steps:
     - name: Run a multi-line script
