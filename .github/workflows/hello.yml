@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   issues:
     types: [opened, edited]
+
 jobs:
   greet:
     env:
@@ -15,3 +16,10 @@ jobs:
         run: |
           echo "Hello $MY_ENV"
           echo "Hello $GITHUB_ACTOR"
+
+  farewell:
+    needs: greet  # Це залежність: завдання виконується після greet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Goodbye
+        run: echo "Goodbye $MY_ENV, thanks for using GitHub Actions!"
