@@ -5,21 +5,20 @@ on:
     types: [opened, edited]
 
 jobs:
-  greet:
-    env:
-      MY_ENV: "John Doe"
+  package-and-publish:
+    needs: greet
     runs-on: ubuntu-latest
     steps:
-      - name: Greet the User
-        run: echo "Hello World!"
-      - name: Run a multi-line script
-        run: |
-          echo "Hello $MY_ENV"
-          echo "Hello $GITHUB_ACTOR"
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_ACTOR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  farewell:
-    needs: greet  # Це залежність: завдання виконується після greet
-    runs-on: ubuntu-latest
-    steps:
-      - name: Say Goodbye
-        run: echo "Goodbye $MY_ENV, thanks for using GitHub Actions!"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latestNV, thanks for using GitHub Actions!"
